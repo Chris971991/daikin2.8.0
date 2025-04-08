@@ -1,7 +1,12 @@
 {
-  "domain": "daikin280",
-  "name": "Daikin 2.8.0",
-  "version": "1.0",
-  "requirements": ["requests"],
-  "codeowners": ["@Chris971991"]
+  "domain": "custom_daikin",
+  "name": "Custom Daikin",
+  "documentation": "https://github.com/fredrike/pydaikin",
+  "issue_tracker": "https://github.com/fredrike/pydaikin/issues",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": ["netifaces", "aiohttp", "urllib3", "tenacity"],
+  "iot_class": "local_polling",
+  "version": "1.0.0",
+  "config_flow": true
 }
