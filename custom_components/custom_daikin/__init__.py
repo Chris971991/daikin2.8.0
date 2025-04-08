@@ -3,8 +3,10 @@ import asyncio
 import logging
 
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_API_KEY, CONF_HOST, CONF_PASSWORD, CONF_UUID
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN, PLATFORMS
 
@@ -22,15 +24,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     from .pydaikin.factory import DaikinFactory
     
     try:
-        host = entry.data["host"]
-        password = entry.data.get("password")
-        key = entry.data.get("key")
-        uuid = entry.data.get("uuid")
+        host = entry.data[CONF_HOST]
+        password = entry.data.get(CONF_PASSWORD)
+        key = entry.data.get(CONF_API_KEY)
+        uuid = entry.data.get(CONF_UUID)
         
         daikin_api = await DaikinFactory(
-            host, 
-            password=password, 
-            key=key, 
+            host,
+            async_get_clientsession(hass),
+            password=password,
+            key=key,
             uuid=uuid
         )
         

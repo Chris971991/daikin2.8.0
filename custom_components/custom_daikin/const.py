@@ -11,6 +11,8 @@ PLATFORMS = ["climate", "sensor"]
 # Config attributes
 CONF_KEY = "key"
 CONF_UUID = "uuid"
+KEY_MAC = "mac"
+TIMEOUT = 30  # seconds
 
 # Attributes
 ATTR_INSIDE_TEMPERATURE = "inside_temperature"
