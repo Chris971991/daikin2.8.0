@@ -1,0 +1,7 @@
+{
+  "domain": "daikin280",
+  "name": "Daikin 2.8.0",
+  "version": "1.0",
+  "requirements": ["requests"],
+  "codeowners": ["@Chris971991"]
+}
