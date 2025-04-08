@@ -1,20 +1,17 @@
 """Config flow for Custom Daikin integration."""
 import logging
-from typing import Any, Dict, Optional
-
 import voluptuous as vol
 
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_PASSWORD
 from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
 import homeassistant.helpers.config_validation as cv
 
 from .const import CONF_KEY, CONF_UUID, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-STEP_USER_DATA_SCHEMA = vol.Schema(
+DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_HOST): str,
         vol.Optional(CONF_PASSWORD): str,
@@ -23,8 +20,7 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
     }
 )
 
-
-async def validate_input(hass: HomeAssistant, data: Dict[str, Any]) -> Dict[str, Any]:
+async def validate_input(hass: HomeAssistant, data):
     """Validate the user input allows us to connect."""
     from .pydaikin.factory import DaikinFactory
     
@@ -35,9 +31,9 @@ async def validate_input(hass: HomeAssistant, data: Dict[str, Any]) -> Dict[str,
     
     try:
         device = await DaikinFactory(
-            host, 
-            password=password, 
-            key=key, 
+            host,
+            password=password,
+            key=key,
             uuid=uuid
         )
         
@@ -54,10 +50,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Custom Daikin."""
 
     VERSION = 1
+    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
     
-    async def async_step_user(self, user_input: Optional[Dict[str, Any]] = None) -> FlowResult:
+    async def async_step_user(self, user_input=None):
         """Handle the initial step."""
-        errors: Dict[str, str] = {}
+        errors = {}
         
         if user_input is not None:
             try:
@@ -76,6 +73,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         
         return self.async_show_form(
             step_id="user",
-            data_schema=STEP_USER_DATA_SCHEMA,
+            data_schema=DATA_SCHEMA,
             errors=errors,
         )

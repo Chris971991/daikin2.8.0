@@ -1,13 +1,11 @@
 """Support for Daikin AC sensors."""
 import logging
-from typing import Any, Callable, Dict, List, Optional
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
     SensorStateClass,
 )
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
     POWER_KILO_WATT,
@@ -15,10 +13,7 @@ from homeassistant.const import (
     TEMP_CELSIUS,
     FREQUENCY_HERTZ,
 )
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import StateType
 
 from .const import (
     ATTR_INSIDE_TEMPERATURE,
@@ -158,9 +153,7 @@ SENSOR_TYPES = {
 }
 
 
-async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
-) -> None:
+async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Daikin sensors based on config_entry."""
     daikin_api = hass.data[DOMAIN][entry.entry_id]
     

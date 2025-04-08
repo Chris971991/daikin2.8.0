@@ -1,6 +1,5 @@
 """Support for Daikin AC units."""
 import logging
-from typing import Any, Dict, List, Optional
 
 from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import (
@@ -11,12 +10,8 @@ from homeassistant.components.climate.const import (
     ClimateEntityFeature,
     HVACMode,
 )
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
     ATTR_INSIDE_TEMPERATURE,
@@ -40,9 +35,7 @@ HVAC_MODE_MAPPING = {
 HVAC_MODE_REVERSE_MAPPING = {v: k for k, v in HVAC_MODE_MAPPING.items()}
 
 
-async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
-) -> None:
+async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Daikin climate based on config_entry."""
     daikin_api = hass.data[DOMAIN][entry.entry_id]
     
